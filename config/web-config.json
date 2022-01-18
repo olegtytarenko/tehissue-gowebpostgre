@@ -1,0 +1,12 @@
+{
+  "http": {
+    "endpoint": "api",
+    "host": "localhost",
+    "port": 9090
+  },
+  "database": {
+    "username": "root",
+    "password": "root",
+    "host": "localhost"
+  }
+}
