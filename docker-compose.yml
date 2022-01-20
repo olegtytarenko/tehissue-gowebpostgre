@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  golang_web_server:
+    build:
+      context: ./
+      dockerfile: .docker/golang/Dockerfile.server
+
+  golang_web_client:
+    build:
+      context: ./
+      dockerfile: .docker/golang/Dockerfile.client
+
+  db:
+    build: .docker/postgress/
+    container_name: golang_postgress
+    environment:
+      POSTGRES_USER: goweb
+      POSTGRES_PASSWORD: goweb
+    volumes:
+      - .docker/postgress/tmp:/var/lib/postgresql/data
+    ports:
+      - "9001:5432"
+    networks:
+      - goweb
+
+networks:
+  goweb:

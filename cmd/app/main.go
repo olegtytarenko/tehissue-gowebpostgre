@@ -1,6 +1,12 @@
-package cmd
+package main
 
-import "flag"
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
+	"time"
+)
 
 var (
 	server   *string
@@ -21,4 +27,11 @@ func main() {
 	// todo
 	// web-service
 
+	fmt.Println("Hello World", server, port, endpoint, pathToConfig)
+
+	log.SetOutput(os.Stdout)
+	for {
+		log.Println("Time init")
+		time.Sleep(time.Second * 2)
+	}
 }
