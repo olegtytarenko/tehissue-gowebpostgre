@@ -1,11 +1,15 @@
 version: "3.9"
 
 services:
-  bin:
-    build: .docker/golang
-    container_name: golang_web
-    volumes:
-      - ./:/go/src/app
+  golang_web_server:
+    build:
+      context: ./
+      dockerfile: .docker/golang/Dockerfile.server
+
+  golang_web_client:
+    build:
+      context: ./
+      dockerfile: .docker/golang/Dockerfile.client
 
   db:
     build: .docker/postgress/
