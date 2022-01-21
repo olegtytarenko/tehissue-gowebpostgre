@@ -58,9 +58,13 @@ build:
 clean:
 	go clean
 
+.PHONY: test
+test:
+	@echo "> Go test"
+	 @-go test ./src/service
 
 .PHONY: install
-setup-run: setup build clean
+install: setup test build clean
 
 .PHONY: demo
 demo: docker-stop docker-build docker-run

@@ -118,13 +118,38 @@ language plpgsql volatile cost 100;
 -- Реализовать самостоятельно:
 
 -- просмотр комментария по id или всех, если id = 0
-create or replace function test.comment_get(_id integer);
+create or replace function test.comment_get(_id integer)
+    returns json as
+$BODY$
+    declare
+        _ret json;
+    begin
+       if _id = 0 then
+           -- Collections
+           select array_to_json(
+               array(
+                   select row_to_json(r) from (
+                    select * from test.comments c
+                  ) r
+               )
+          ) into _ret;
+       else
+           -- Single row
+           select row_to_json(r) into _ret from (
+            select * from test.comments c where c.id = _id
+           ) r;
+       end if;
+
+       return _ret;
+    end;
+$BODY$
+language plpgsql volatile cost 100;
 
 -- редактирование текста комментария с указанным id. Авторство комментария менять нельзя.
-create or replace function test.comment_upd(_id integer, _params json);
+-- create or replace function test.comment_upd(_id integer, _params json);
 
 -- удаление комментария с указанным id
-create or replace function test.comment_del(_id integer);
+-- create or replace function test.comment_del(_id integer);
 
 -- добавление комментария за авторством пользователя _id_user
-create or replace function test.user_comment_ins(_id_user integer, _params json);
+-- create or replace function test.user_comment_ins(_id_user integer, _params json);
